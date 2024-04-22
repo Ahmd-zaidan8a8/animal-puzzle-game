@@ -79,7 +79,7 @@ const road2 = new Road(100 ,300 , 500 ,300);
 const road3 = new Road(100 ,500 , 500 ,500);
 
 // Vertical
-const road4 = new Road(300 ,70 , 300 ,600);
+const road4 = new Road(300 ,50 , 300 ,550);
 
 road1.createRoad();
 road2.createRoad();
