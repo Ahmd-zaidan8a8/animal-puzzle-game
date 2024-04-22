@@ -39,3 +39,8 @@ img {
     position: absolute;
 }
 
+.selected {
+    border: 3px solid tomato;
+    opacity: .5;
+}
+

@@ -69,6 +69,42 @@ class RoadElement {
         this.element.className = "road-element";
         this.element.style.left = x + "px";
         this.element.style.top = y + "px";
+        // bydefault div elments doesn't reciev key events
+        this.element.setAttribute('tabindex', '0');
+
+        // changing this to reffer to the instance object
+        this.handleClick = this.handleClick.bind(this);
+        this.handlekey = this.handlekey.bind(this);
+
+        this.element.addEventListener('click' , this.handleClick);
+
+        this.element.addEventListener('keydown', this.handlekey);
+    }
+    handleClick(){
+        // to select only one at the time
+        // remove selected class from all the elements
+        const allElem = document.querySelectorAll('.road-element');
+        allElem.forEach((elm) => {
+            elm.classList.remove('selected');
+        });
+
+        this.element.classList.toggle('selected');
+    }
+    handlekey(event){
+        if(this.isSlected()){
+            let currentLeft = parseInt(this.element.style.left);
+            if(event.key === 'ArrowRight'){
+                this.element.style.left = `${currentLeft + 10}px`;
+                console.log('move left');
+            }
+            if(event.key === 'ArrowLeft'){
+                this.element.style.left = `${currentLeft - 10}px`;
+                console.log('move right');
+            }
+        }
+    }
+    isSlected(){
+        return this.element.classList.contains('selected');
     }
 }
 
