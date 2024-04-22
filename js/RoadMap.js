@@ -6,25 +6,37 @@ class Road {
         this.startY = startY;
         this.endX = endX;
         this.endY = endY;
+        // clac the distance bettween 2 diffrents points
     this.distance = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
     // the angle between 2 points relative to the postive axis
     this.angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
-
-    // this.createRoad();
-
 
     }
 
     createRoad() {
     let road = document.createElement("div");
     road.className = "road";
+        // Vertical Approach
+    if(this.startX === this.endX){
+        road.style.width = "20px";
+        // endX - startX = 0
+        road.style.height = Math.abs(this.endY - this.startY) + "px";
+        // road.style.transform = "rotate(90deg)";
+    
+        road.style.left = Math.min(this.startX , this.endX) + "px";
+        road.style.top = Math.min(this.startY, this.endY) + "px";
+    }
+    // Horizontal Approach
+    else {
+        // endY - startY = 0
+        road.style.width = Math.abs(this.endX - this.startX) + 'px';
+        road.style.height = '20px';
+
+        road.style.left = Math.min(this.startX, this.endX) + "px";
+        road.style.top = Math.min(this.startY, this.endY) + "px";
+    }
 
 
-    road.style.width = this.distance + "px";
-    road.style.transform = "rotate(" + this.angle + "deg)";
-
-    road.style.left = this.startX + "px";
-    road.style.top = this.startY + "px";
 
     document.getElementById("road-container").appendChild(road);
     }
@@ -59,13 +71,13 @@ class RoadElement {
 }
 
 
+// Horz
+const road1 = new Road(100 ,130 , 500 ,130);
+const road2 = new Road(100 ,300 , 500 ,300);
+const road3 = new Road(100 ,500 , 500 ,500);
 
-const road1 = new Road(70 ,130 , 500 ,130);
-const road2 = new Road(70 ,300 , 500 ,300);
-const road3 = new Road(70 ,500 , 500 ,500);
-
-const road4 = new Road(70 ,500 , 70 ,120);
-
+// Vertical
+const road4 = new Road(300 ,70 , 300 ,600);
 
 
 road1.createRoad();
