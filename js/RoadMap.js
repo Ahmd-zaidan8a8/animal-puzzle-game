@@ -10,8 +10,6 @@ class Road {
     this.distance = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
     // the angle between 2 points relative to the postive axis
     this.angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
-    // to Keep track of the road that inserted dynamiclly
-    // this.road = null ;
 
     }
 
@@ -37,8 +35,6 @@ class Road {
         road.style.left = Math.min(this.startX, this.endX) + "px";
         road.style.top = Math.min(this.startY, this.endY) + "px";
     }
-
-    // this.road = road;
 
     document.getElementById("road-container").appendChild(road);
     }
@@ -103,21 +99,32 @@ class RoadElement {
         if(this.isSlected()){
             let currentLeft = parseInt(this.element.style.left);
             let currentTop = parseInt(this.element.style.top);
+
+            // Road Range:
+            let minX = Math.min(this.road.startX , this.road.endX);
+            let maxX = Math.max(this.road.startX , this.road.endX);
+            let minY = Math.min(this.road.startY , this.road.endY);
+            let maxY = Math.max(this.road.startY , this.road.endY);
+
             if(event.key === 'ArrowRight' 
             && this.road.isHorizontal()){
-                this.element.style.left = `${currentLeft + 10}px`;
+                if(currentLeft <= maxX)
+                    this.element.style.left = `${currentLeft + 10}px`;
             }
             if(event.key === 'ArrowLeft' 
             && this.road.isHorizontal()){
-                this.element.style.left = `${currentLeft - 10}px`;
+                if( currentLeft >= minX)
+                    this.element.style.left = `${currentLeft - 10}px`;
             }
             if(event.key === 'ArrowUp' 
             && this.road.isVertical()){
-                this.element.style.top = `${currentTop - 10}px`
+                if( currentTop >= minY)
+                    this.element.style.top = `${currentTop - 10}px`
             }
             if(event.key === 'ArrowDown' 
             && this.road.isVertical()){
-                this.element.style.top = `${currentTop + 10}px`
+                if(currentTop <= maxY)
+                    this.element.style.top = `${currentTop + 10}px`
             }
         }
     }
