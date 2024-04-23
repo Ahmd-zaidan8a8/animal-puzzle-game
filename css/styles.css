@@ -29,7 +29,7 @@ img {
     background-color: #999;
     width: 20px;
     height: 20px; 
-    z-index: -9999;
+    z-index: -1;
 }
 
 .road-element {

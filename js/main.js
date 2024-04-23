@@ -13,7 +13,7 @@ window.addEventListener('click' , (event) => {
 
 function createRoad(pointsArr){
 
-    for(let i = 0 ; i < pointsArr.length - 1 ; i += 2){
+    for(let i = 0 ; i < pointsArr.length - 1 ; i++){
         let startPoint = pointsArr[i];
         let endPoint = pointsArr[i + 1];
     
