@@ -11,7 +11,7 @@ class Road {
     // the angle between 2 points relative to the postive axis
     this.angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
     // to Keep track of the road that inserted dynamiclly
-    this.road = null ;
+    // this.road = null ;
 
     }
 
@@ -19,7 +19,7 @@ class Road {
     let road = document.createElement("div");
     road.className = "road";
         // Vertical Approach
-    if(this.startX === this.endX){
+    if( this.isVertical()){
         road.style.width = "20px";
         // endX - startX = 0
         road.style.height = Math.abs(this.endY - this.startY) + "px";
@@ -29,7 +29,7 @@ class Road {
         road.style.top = Math.min(this.startY, this.endY) + "px";
     }
     // Horizontal Approach
-    else {
+    if( this.isHorizontal()) {
         // endY - startY = 0
         road.style.width = Math.abs(this.endX - this.startX) + 'px';
         road.style.height = '20px';
@@ -38,7 +38,7 @@ class Road {
         road.style.top = Math.min(this.startY, this.endY) + "px";
     }
 
-    this.road = road;
+    // this.road = road;
 
     document.getElementById("road-container").appendChild(road);
     }
@@ -53,22 +53,31 @@ class Road {
         let secondElmX = this.endX;
         let secondElmY = this.endY;
 
-        const firstElm = new RoadElement(firstElmX,firstElmY);
-        const secondElm = new RoadElement(secondElmX,secondElmY);
+        // passing reffrence to the current object in order to check if the elm
+        // on a vertical or Horizontal road to restrict movments.
+        const firstElm = new RoadElement(firstElmX,firstElmY,this);
+        const secondElm = new RoadElement(secondElmX,secondElmY,this);
             
         document.getElementById('road-container').appendChild(firstElm.element);
         document.getElementById('road-container').appendChild(secondElm.element);
         }
-
+        isHorizontal(){
+            return this.startY === this.endY;
+        }
+        isVertical(){
+            return this.startX === this.endX;
+        }
 
     }
 
 class RoadElement {
-    constructor(x, y) {
+    constructor(x, y , road) {
         this.element = document.createElement("div");
         this.element.className = "road-element";
         this.element.style.left = x + "px";
         this.element.style.top = y + "px";
+
+        this.road = road;
         // bydefault div elments doesn't reciev key events
         this.element.setAttribute('tabindex', '0');
 
@@ -93,16 +102,26 @@ class RoadElement {
     handlekey(event){
         if(this.isSlected()){
             let currentLeft = parseInt(this.element.style.left);
-            if(event.key === 'ArrowRight'){
+            let currentTop = parseInt(this.element.style.top);
+            if(event.key === 'ArrowRight' 
+            && this.road.isHorizontal()){
                 this.element.style.left = `${currentLeft + 10}px`;
-                console.log('move left');
             }
-            if(event.key === 'ArrowLeft'){
+            if(event.key === 'ArrowLeft' 
+            && this.road.isHorizontal()){
                 this.element.style.left = `${currentLeft - 10}px`;
-                console.log('move right');
+            }
+            if(event.key === 'ArrowUp' 
+            && this.road.isVertical()){
+                this.element.style.top = `${currentTop - 10}px`
+            }
+            if(event.key === 'ArrowDown' 
+            && this.road.isVertical()){
+                this.element.style.top = `${currentTop + 10}px`
             }
         }
     }
+    
     isSlected(){
         return this.element.classList.contains('selected');
     }
