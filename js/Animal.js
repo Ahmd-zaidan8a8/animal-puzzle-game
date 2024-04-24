@@ -1,10 +1,16 @@
 
 
 class Animal {
-    constructor(name){this.name = name}
+    constructor(name , path){
+        this.name = name;
+        this.path = path;        
 
-    walk(){
-        console.log(`${this.name} walk`);
     }
 }
+
+
+
+
+
+export default Animal;
 

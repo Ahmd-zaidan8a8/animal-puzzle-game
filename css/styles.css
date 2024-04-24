@@ -43,4 +43,16 @@ img {
     border: 3px solid tomato;
     opacity: .5;
 }
+.timer-container {
+    background: tomato;
+    width: 100px;
+    height: 50px;
+    padding: 20px;
+    position: absolute;
+    color: white;
+    left: 500px;
+    text-align: center;
+    font-size: large;
+}
+
 
