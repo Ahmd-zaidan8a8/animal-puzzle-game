@@ -61,16 +61,6 @@ class Utils {
         point.x === intersectionPoint.x && point.y === intersectionPoint.y
     );
   }
-  // static checkIntersection(element , intersectionPoint) {
-  //   // collect postion
-  //   const currentLeft = parseInt(element.style.left);
-  //   const currentTop = parseInt(element.style.top);
-  //   const tolerance = 30;
-
-  //   return (
-  //     Math.abs(currentLeft - intersectionPoint.x) <= tolerance &&
-  //     Math.abs(currentTop - intersectionPoint.y) <= tolerance);
-  // }
   static checkIntersection(element, road) {
     const currentLeft = parseInt(element.style.left);
     const currentTop = parseInt(element.style.top);
@@ -91,6 +81,12 @@ class Utils {
       currentTop <= maxY + tolerance
     );
   }
+
+  static shiftArray(arr, shift) {
+    const length = arr.length;
+    shift = shift % length;
+    return arr.slice(-shift).concat(arr.slice(0, length - shift));
+}
   
 
 

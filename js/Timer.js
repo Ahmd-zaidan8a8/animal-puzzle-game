@@ -24,7 +24,15 @@ class Timer {
         const remainnigTime = this.duration - elapsedTime;
         if (remainnigTime <= 0) {
           this.stop();
-          this.timerContainer.innerHTML = "00:00";
+          const gameOverWindow = document.createElement('div');
+          const rePlayButton = document.createElement('button');
+
+          gameOverWindow.innerHTML = `You Lost , Try Again `;
+          gameOverWindow.id = 'gameover';
+          rePlayButton.innerHTML = 'Restart Game';
+          rePlayButton.classList.add('reset-button');
+          document.getElementById('road-container').appendChild(gameOverWindow);
+          gameOverWindow.appendChild(rePlayButton);
         } else {
           const seconds = Math.floor(remainnigTime / 1000);
           const minutes = Math.floor(seconds / 60);

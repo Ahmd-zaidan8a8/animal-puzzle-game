@@ -43,12 +43,14 @@ class Road {
     this.elements.push(element);
 
     const img = document.createElement("img");
-    // img.src = elm.path;
-    // img.alt = elm.name;
+    img.src = elm.path;
+    img.alt = elm.name;
 
     element.className = "road-element";
     element.style.left = this.startX - ELEMENT_WIDTH + "px";
     element.style.top = this.startY + "px";
+
+    element.appendChild(img);
 
     // bydefault div elments doesn't reciev key events
     element.setAttribute("tabindex", "0");
@@ -63,8 +65,10 @@ class Road {
     element.style.top = this.endY + "px";
 
     const img = document.createElement("img");
-    // img.src = elm.path;
-    // img.alt = elm.name;
+    img.src = elm.path;
+    img.alt = elm.name;
+
+    element.appendChild(img);
 
     // bydefault div elments doesn't reciev key events
     element.setAttribute("tabindex", "0");
@@ -93,39 +97,27 @@ const roads = [road1, road2, road3, road4];
 
 // Animal Elments
 const Animals = [
-  new Animal('Camel' , 'images/Animals/Camel.jpg' ),
-  new Animal('Dolphin' , 'images/Animals/Camel.jpg' ),
-  new Animal('Duck' ,  'images/Animals/Camel.jpg'),
-  new Animal('Goat' , 'images/Animals/Camel.jpg'),
-  new Animal('Mole' , 'images/Animals/Camel.jpg'),
-  new Animal('Penguin' ,  'images/Animals/Camel.jpg'),
-  new Animal('Penguin' , 'images/Animals/Camel.jpg'),
-  new Animal('Squirrel' , 'images/Animals/Camel.jpg' )
+    new Animal("Camel", "images/Animals/Camel.jpg"),
+    new Animal("Dolphin", "images/Animals/Dolphin.jpg"),
+    new Animal("Duck", "images/Animals/duck.jpg"),
+    new Animal("Goat", "images/Animals/Goat.jpg"),
+    new Animal("Mole", "images/Animals/Mole.jpg"),
+    new Animal("Penguin", "images/Animals/Penguin.webp"),
+    new Animal("Penguin", "images/Animals/Penguin.webp"),
+    new Animal("Squirrel", "images/Animals/Squirrel.png"),
 ];
+let shiftedArray = Utils.shiftArray(Animals,4);
 
-roads.forEach((road) => {
-  for (let i = 0; i <= Animals.length - 2; i += 2) {
-    console.log(`${Animals[i]} , ${Animals[i + 1]}`);
-    road.addFirst(Animals[i]);
-    road.addLast(Animals[i + 1]);
-  }
-});
-
-function getRoadElements(roads) {
-  let spreadArr = [];
-
-  const length = roads.length;
-
-  for (let i = 0; i < length; i++) {
-    let road = roads[i].elements;
-    for (let j = 0; j < road.length; j++) {
-      spreadArr.push(road[j]);
-    }
-  }
-  return spreadArr;
+function addAnimalToRoad(road , animal1, animal2){
+  road.addFirst(animal1);
+  road.addLast(animal2);
 }
 
-const elements = getRoadElements(roads);
+addAnimalToRoad(road1,shiftedArray[0] , shiftedArray[1]);
+addAnimalToRoad(road2,shiftedArray[2] , shiftedArray[3]);
+addAnimalToRoad(road3,shiftedArray[4] , shiftedArray[5]);
+addAnimalToRoad(road4,shiftedArray[6] , shiftedArray[7]);
+
 
 const intersections = Utils.collectIntersectionsPoints(roads);
 
@@ -182,23 +174,32 @@ roads.forEach((road, i, roads) => {
       // Road Range:
       if (intersectionDetect) {
         element.style.background = "red";
-        const verticalRoad = roads.find((r) => r.isVertical() && Utils.checkIntersection(element, r));
-        const horizontalRoad = roads.find((r) => r.isHorizontal() && Utils.checkIntersection(element, r));
-    
+        const verticalRoad = roads.find(
+          (r) => r.isVertical() && Utils.checkIntersection(element, r)
+        );
+        const horizontalRoad = roads.find(
+          (r) => r.isHorizontal() && Utils.checkIntersection(element, r)
+        );
+
         if (verticalRoad && event.key === "ArrowUp" && road.isHorizontal()) {
           road = verticalRoad;
           element.style.transform = "rotate(-90deg)";
-        } else if (horizontalRoad && event.key === "ArrowLeft" && road.isVertical()) {
+        } else if (
+          horizontalRoad &&
+          event.key === "ArrowLeft" &&
+          road.isVertical()
+        ) {
           road = horizontalRoad;
           element.style.transform = "rotate(0deg)";
         }
-
       }
     });
-    
   });
 });
 
-// const timer = new Timer(120);
+const timer = new Timer(10);
 
-// setTimeout(timer.start(),5000);
+setTimeout(timer.start(),5000);
+
+
+
