@@ -61,11 +61,11 @@ class Utils {
         point.x === intersectionPoint.x && point.y === intersectionPoint.y
     );
   }
-  static checkIntersection(element, road) {
+  static inRange(element, road) {
     const currentLeft = parseInt(element.style.left);
     const currentTop = parseInt(element.style.top);
   
-    const tolerance = 10;
+    const tolerance = 30;
   
     // Determine the boundaries of the road
     let minX = Math.min(road.startX, road.endX) - ELEMENT_WIDTH;
@@ -82,12 +82,21 @@ class Utils {
     );
   }
 
-  static shiftArray(arr, shift) {
+  static shiftArray(arr) {
     const length = arr.length;
+    let shift = Math.floor(Math.random() * length);
     shift = shift % length;
     return arr.slice(-shift).concat(arr.slice(0, length - shift));
 }
-  
+  static isInGridCell(element, cell) {
+    const elementRect = element.getBoundingClientRect();
+    return (
+      elementRect.left >= cell.minX &&
+      elementRect.right <= cell.maxX &&
+      elementRect.top >= cell.minY &&
+      elementRect.bottom <= cell.maxY
+    );
+  }
 
 
 }

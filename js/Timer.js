@@ -7,11 +7,11 @@ class Timer {
 
     this.timerContainer = document.createElement("div");
     this.timerContainer.classList.add("timer-container");
-    let durationInSeconds = this.duration / 1000 / 60
-    this.timerContainer.innerHTML = `${this.formatTime(durationInSeconds)}:${this.formatTime(0)}`;
+    let durationInMinutes = Math.ceil(this.duration / 1000 / 60);
+    this.timerContainer.innerHTML = `${this.formatTime(durationInMinutes)}:${this.formatTime(0)}`;
 
 
-    document.getElementById("road-container").appendChild(this.timerContainer);
+    document.getElementById("grid").appendChild(this.timerContainer);
   }
 
   start() {
@@ -27,15 +27,16 @@ class Timer {
           const gameOverWindow = document.createElement('div');
           const rePlayButton = document.createElement('button');
 
-          gameOverWindow.innerHTML = `You Lost , Try Again `;
+          gameOverWindow.innerHTML = `Game Over, Try Again `;
           gameOverWindow.id = 'gameover';
           rePlayButton.innerHTML = 'Restart Game';
-          rePlayButton.classList.add('reset-button');
+          rePlayButton.classList.add('btn');
 
           rePlayButton.addEventListener('click' , () => {
             window.location.reload();
+            document.getElementById('main-section').style.display = 'none';
           });
-          document.getElementById('road-container').appendChild(gameOverWindow);
+          document.querySelector('body').appendChild(gameOverWindow);
           gameOverWindow.appendChild(rePlayButton);
         } else {
           const seconds = Math.floor(remainnigTime / 1000);
@@ -54,5 +55,7 @@ class Timer {
     return time < 10 ? `0${time}` : time;
   }
 }
+
+
 
 export default Timer;
