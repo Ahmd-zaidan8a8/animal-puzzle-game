@@ -81,5 +81,10 @@ img {
     opacity: .7;
 }
 
+.Duck , .Camel , .Goat , .Beaver , .Dolphin , .Squirrel , .Mole{
+    border: 5px solid green;
+    opacity: 1;
+}
+
 
 

@@ -65,7 +65,7 @@ class Utils {
     const currentLeft = parseInt(element.style.left);
     const currentTop = parseInt(element.style.top);
   
-    const tolerance = 50;
+    const tolerance = 10;
   
     // Determine the boundaries of the road
     let minX = Math.min(road.startX, road.endX) - ELEMENT_WIDTH;

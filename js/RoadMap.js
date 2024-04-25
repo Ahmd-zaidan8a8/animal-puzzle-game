@@ -3,6 +3,7 @@ import Timer from "./Timer.js";
 import Utils from "./Utils.js";
 
 const ELEMENT_WIDTH = 50;
+const ELEMENT_HEIGHT = 50;
 class Road {
   constructor(startX, startY, endX, endY) {
     this.startX = startX;
@@ -14,6 +15,7 @@ class Road {
       Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2)
     );
     this.elements = [];
+    this.images = [];
 
     let road = document.createElement("div");
     road.className = "road";
@@ -41,8 +43,11 @@ class Road {
   addFirst(elm) {
     const element = document.createElement("div");
     this.elements.push(element);
+    element.style.width = ELEMENT_WIDTH;
+    element.style.height = ELEMENT_HEIGHT;
 
     const img = document.createElement("img");
+    this.images.push(img);
     img.src = elm.path;
     img.alt = elm.name;
 
@@ -61,12 +66,16 @@ class Road {
     const element = document.createElement("div");
     element.className = "road-element";
     this.elements.push(element);
-    element.style.left = this.endX - ELEMENT_WIDTH + "px";
-    element.style.top = this.endY + "px";
+    element.style.width = ELEMENT_WIDTH;
+    element.style.height = ELEMENT_HEIGHT;
 
     const img = document.createElement("img");
+    this.images.push(img);
     img.src = elm.path;
     img.alt = elm.name;
+
+    element.style.left = this.endX - ELEMENT_WIDTH + "px";
+    element.style.top = this.endY + "px";
 
     element.appendChild(img);
 
@@ -81,6 +90,11 @@ class Road {
   }
   isVertical() {
     return this.startX === this.endX;
+  }
+  // destructure
+  getImages() {
+    const [first, second] = this.images;
+    return [first, second];
   }
 }
 
@@ -97,27 +111,71 @@ const roads = [road1, road2, road3, road4];
 
 // Animal Elments
 const Animals = [
-    new Animal("Camel", "images/Animals/Camel.jpg"),
-    new Animal("Dolphin", "images/Animals/Dolphin.jpg"),
-    new Animal("Duck", "images/Animals/duck.jpg"),
-    new Animal("Goat", "images/Animals/Goat.jpg"),
-    new Animal("Mole", "images/Animals/Mole.jpg"),
-    new Animal("Penguin", "images/Animals/Penguin.webp"),
-    new Animal("Penguin", "images/Animals/Penguin.webp"),
-    new Animal("Squirrel", "images/Animals/Squirrel.png"),
+  new Animal("Camel", "images/Animals/Camel.jpg"),
+  new Animal("Dolphin", "images/Animals/Dolphin.jpg"),
+  new Animal("Duck", "images/Animals/duck.jpg"),
+  new Animal("Goat", "images/Animals/Goat.jpg"),
+  new Animal("Mole", "images/Animals/Mole.jpg"),
+  new Animal("Penguin", "images/Animals/Penguin.webp"),
+  new Animal("Beaver", "images/Animals/Beaver.webp"),
+  new Animal("Squirrel", "images/Animals/Squirrel.png"),
 ];
-let shiftedArray = Utils.shiftArray(Animals,4);
+let shiftedArray = Utils.shiftArray(Animals, 7);
 
-function addAnimalToRoad(road , animal1, animal2){
+function addAnimalToRoad(road, animal1, animal2) {
   road.addFirst(animal1);
   road.addLast(animal2);
 }
 
-addAnimalToRoad(road1,shiftedArray[0] , shiftedArray[1]);
-addAnimalToRoad(road2,shiftedArray[2] , shiftedArray[3]);
-addAnimalToRoad(road3,shiftedArray[4] , shiftedArray[5]);
-addAnimalToRoad(road4,shiftedArray[6] , shiftedArray[7]);
+addAnimalToRoad(road1, shiftedArray[0], shiftedArray[1]);
+addAnimalToRoad(road2, shiftedArray[2], shiftedArray[3]);
+addAnimalToRoad(road3, shiftedArray[4], shiftedArray[5]);
+addAnimalToRoad(road4, shiftedArray[6], shiftedArray[7]);
 
+
+const gridCells = [
+  { id: "Goat", minX: 0, maxX: 0, minY: 0, maxY: 200 },
+  { id: "Camel", minX: 200, maxX: 400, minY: 0, maxY: 120 },
+  { id: "Beaver", minX: 20, maxX: 200, minY: 200, maxY: 300 },
+  { id: "Duck", minX: 400, maxX: 600, minY: 200, maxY: 400 },
+  { id: "Dolphin", minX: 30, maxX: 200, minY: 400, maxY: 500 },
+  { id: "Squirrel", minX: 200, maxX: 400, minY: 400, maxY: 600 },
+  { id: "Mole", minX: 400, maxX: 600, minY: 400, maxY: 500 },
+];
+
+function isInGridCell(element, cell) {
+  const elementRect = element.getBoundingClientRect();
+  return (
+    elementRect.left >= cell.minX &&
+    elementRect.right <= cell.maxX &&
+    elementRect.top >= cell.minY &&
+    elementRect.bottom <= cell.maxY
+  );
+}
+
+function highlightInGridCell(element) {
+  gridCells.forEach((cell) => {
+      if (
+        isInGridCell(element, cell)
+        && cell.id === element.children[0].getAttribute('alt')
+      ) {
+        element.classList.add(cell.id);
+      } else {
+        element.classList.remove(cell.id);
+      }
+  });
+}
+
+
+
+roads.forEach((road) => {
+  road.elements.forEach((element) => {
+    const observer = new MutationObserver(() => {
+      highlightInGridCell(element , road);
+    });
+    observer.observe(element, { attributes: true, attributeFilter: ["style"] });
+  });
+});
 
 const intersections = Utils.collectIntersectionsPoints(roads);
 
@@ -197,9 +255,6 @@ roads.forEach((road, i, roads) => {
   });
 });
 
-const timer = new Timer(10);
+// const timer = new Timer(10);
 
-setTimeout(timer.start(),5000);
-
-
-
+// setTimeout(timer.start(),5000);

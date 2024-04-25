@@ -31,6 +31,10 @@ class Timer {
           gameOverWindow.id = 'gameover';
           rePlayButton.innerHTML = 'Restart Game';
           rePlayButton.classList.add('reset-button');
+
+          rePlayButton.addEventListener('click' , () => {
+            window.location.reload();
+          });
           document.getElementById('road-container').appendChild(gameOverWindow);
           gameOverWindow.appendChild(rePlayButton);
         } else {
