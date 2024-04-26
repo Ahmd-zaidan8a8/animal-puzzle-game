@@ -46,14 +46,15 @@ window.addEventListener('click', (event) => {
 
 // define the game grid:
 const gridCells = [
-  { id: "goat", minX: 0, maxX: 0, minY: 200, maxY: 200 },
-  { id: "camel", minX: 200, maxX: 400, minY: 30, maxY: 120 },
-  { id: "penguin", minX: 400, maxX: 650, minY: 0, maxY: 200 },
-  { id: "beaver", minX: 30, maxX: 200, minY: 200, maxY: 400 },
-  { id: "duck", minX: 400, maxX: 600, minY: 250, maxY: 400 },
-  { id: "dolphin", minX: 25, maxX: 180, minY: 450, maxY: 550 },
-  { id: "squirrel", minX: 230, maxX: 400, minY: 500, maxY: 600 },
-  { id: "mole", minX: 500, maxX: 600, minY: 400, maxY: 600 },
+  { id: "goat", minX: 400, maxX: 600, minY: 0, maxY: 200 },
+  { id: "camel", minX: 600, maxX: 800, minY: 0, maxY: 130 },
+  { id: "penguin", minX: 800, maxX: 1000, minY: 0, maxY: 200 },
+
+  { id: "beaver", minX: 400, maxX: 600, minY: 200, maxY: 400 },
+  { id: "duck", minX: 800, maxX: 1000, minY: 200, maxY: 400 },
+  { id: "dolphin", minX: 600, maxX: 600, minY: 500, maxY: 400 },
+  { id: "squirrel", minX: 600, maxX: 800, minY: 400, maxY: 600 },
+  { id: "mole", minX: 800, maxX: 1000, minY: 400, maxY: 600 },
 ];
 
 // // RoadMap Structure
