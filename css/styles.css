@@ -35,8 +35,9 @@ a {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-image: url(../images/background/starterBackground.jpg);
-    
+    background-image: url(../images/background/StarTer.webp);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .btn {
