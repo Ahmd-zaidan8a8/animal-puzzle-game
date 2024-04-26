@@ -2,16 +2,11 @@ import Animal from "./Animal.js";
 import Road from "./RoadMap.js";
 import Timer from "./Timer.js";
 import Utils from "./Utils.js";
+import Score from "./Score.js"
 
 const ELEMENT_WIDTH = 50;
 const highlightedAnimals = [];
-
-window.addEventListener("click", (event) => {
-  let postionX = event.clientX;
-  let postionY = event.clientY;
-
-  console.log(`{x:${postionX} y:${postionY}}`);
-});
+const scoreContainer = new Score();
 
 // Starter section / // Timer
 const startSection = document.getElementById("starter-section");
@@ -32,20 +27,33 @@ document.addEventListener("DOMContentLoaded", () => {
     clearInterval(nameId);
     const timer = new Timer(120);
     setTimeout(timer.start(),2000);
+
+    const id = setInterval(() => {
+      if(highlightedAnimals.length === 8){
+        clearInterval(id);
+      } else {
+        scoreContainer.displayScore();
+      }
+    } , 1000);
   });
 });
 
 
+window.addEventListener('click', (event) => {
+  console.log(`x:${event.clientX},y:${event.clientY}`)
+})
+
+
 // define the game grid:
 const gridCells = [
-  { id: "goat", minX: 20, maxX: 200, minY: 70, maxY: 180 },
+  { id: "goat", minX: 0, maxX: 0, minY: 200, maxY: 200 },
   { id: "camel", minX: 200, maxX: 400, minY: 30, maxY: 120 },
-  { id: "penguin", minX: 400, maxX: 600, minY: 50, maxY: 200 },
+  { id: "penguin", minX: 400, maxX: 650, minY: 0, maxY: 200 },
   { id: "beaver", minX: 30, maxX: 200, minY: 200, maxY: 400 },
   { id: "duck", minX: 400, maxX: 600, minY: 250, maxY: 400 },
   { id: "dolphin", minX: 25, maxX: 180, minY: 450, maxY: 550 },
   { id: "squirrel", minX: 230, maxX: 400, minY: 500, maxY: 600 },
-  { id: "mole", minX: 450, maxX: 600, minY: 450, maxY: 550 },
+  { id: "mole", minX: 500, maxX: 600, minY: 400, maxY: 600 },
 ];
 
 // // RoadMap Structure
@@ -71,9 +79,6 @@ const Animals = [
   new Animal("squirrel", "images/Animals/Squirrel.png"),
 ];
 
-// let shiftedArray = Utils.shiftArray(Animals);
-
-const animalMap = new Map();
 
 // i : counter varaible
 let i = 0;
@@ -82,18 +87,12 @@ roads.forEach(road => {
   i += 2;
 });
 
-roads.forEach(road => {
-  road.animalDivs.forEach(animaldiv => {
-    animalMap.set()
-  })
-
-})
-
 
 roads.forEach(road => {
   road.animalDivs.forEach((animal) => {
     const observer = new MutationObserver(() => {
       highlightInGridCell(animal, road);
+      console.log()
     });
     observer.observe(animal, { attributes: true, attributeFilter: ["style"] });
   });
@@ -183,23 +182,19 @@ function highlightInGridCell(animal) {
       Utils.isInGridCell(animal, cell) &&
       cell.id === animal.children[0].getAttribute("alt")
     ){
-      animal.classList.add('highlight');
+      animal.classList.add(cell.id);
       let id = animal.children[0].getAttribute("alt");
-      if(!highlightedAnimals.includes(id))
+      if(!highlightedAnimals.includes(id)){
         highlightedAnimals.push(id);
+        scoreContainer.updateScore();
+      }
       
     } else {
-      animal.classList.remove('highlight');
+      animal.classList.remove(cell.id);
     }
   });
 }
 
 
-const id = setInterval(() => {
-  if(highlightedAnimals.length === 8){
-    clearInterval(id);
-  } else {
-    console.log(highlightedAnimals.length);
-  }
-} , 1000);
+
 

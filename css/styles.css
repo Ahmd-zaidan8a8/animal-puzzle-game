@@ -92,7 +92,6 @@ a {
     text-align: center;
     width: 100%;
     height: 100%;
-    /* background: tomato; */
     background-image: url('../images/background/end.jpg');
     font-size: xx-large;
     color: white;
@@ -130,10 +129,31 @@ a {
     font-size: large;
 }
 
-.highlight
+.camel,
+.dolphin ,
+.duck ,
+.goat ,
+.mole ,
+.penguin ,
+.beaver ,
+.squirrel
 {
     border: 5px solid green;
     opacity: 1;
+}
+#points-container {
+    width: 50px;
+    height: 50px;
+    border: 2px solid tomato;
+    background-color: #fff;
+    position: absolute;
+    left: 525px;
+    top: 50px;
+    border-radius: 50%;
+    color: tomato;
+    text-align: center;
+    padding-top: 1.5rem;
+    font-size: 2rem;
 }
 
 
