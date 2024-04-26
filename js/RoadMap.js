@@ -1,10 +1,5 @@
-import Animal from "./Animal.js";
-import Timer from "./Timer.js";
-import Utils from "./Utils.js";
 
 const ELEMENT_WIDTH = 50;
-const ELEMENT_HEIGHT = 50;
-let roadChanging = false;
 class Road {
   constructor(startX, startY, endX, endY) {
     this.startX = startX;

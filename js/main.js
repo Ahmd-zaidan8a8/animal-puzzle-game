@@ -4,6 +4,7 @@ import Timer from "./Timer.js";
 import Utils from "./Utils.js";
 
 const ELEMENT_WIDTH = 50;
+const highlightedAnimals = [];
 
 window.addEventListener("click", (event) => {
   let postionX = event.clientX;
@@ -29,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     startSection.style.display = "none";
     main.style.display = "block";
     clearInterval(nameId);
-    const timer = new Timer(5);
+    const timer = new Timer(120);
     setTimeout(timer.start(),2000);
   });
 });
@@ -41,7 +42,7 @@ const gridCells = [
   { id: "camel", minX: 200, maxX: 400, minY: 30, maxY: 120 },
   { id: "penguin", minX: 400, maxX: 600, minY: 50, maxY: 200 },
   { id: "beaver", minX: 30, maxX: 200, minY: 200, maxY: 400 },
-  { id: "duck", minX: 450, maxX: 620, minY: 250, maxY: 350 },
+  { id: "duck", minX: 400, maxX: 600, minY: 250, maxY: 400 },
   { id: "dolphin", minX: 25, maxX: 180, minY: 450, maxY: 550 },
   { id: "squirrel", minX: 230, maxX: 400, minY: 500, maxY: 600 },
   { id: "mole", minX: 450, maxX: 600, minY: 450, maxY: 550 },
@@ -70,14 +71,24 @@ const Animals = [
   new Animal("squirrel", "images/Animals/Squirrel.png"),
 ];
 
-let shiftedArray = Utils.shiftArray(Animals);
+// let shiftedArray = Utils.shiftArray(Animals);
+
+const animalMap = new Map();
 
 // i : counter varaible
 let i = 0;
-roads.forEach((road) => {
+roads.forEach(road => {
   road.addAnimalToRoad(Animals[i], Animals[i + 1]);
   i += 2;
 });
+
+roads.forEach(road => {
+  road.animalDivs.forEach(animaldiv => {
+    animalMap.set()
+  })
+
+})
+
 
 roads.forEach(road => {
   road.animalDivs.forEach((animal) => {
@@ -164,15 +175,31 @@ roads.forEach((road, i, roads) => {
   });
 });
 
+
+
 function highlightInGridCell(animal) {
   gridCells.forEach(cell => {
     if (
       Utils.isInGridCell(animal, cell) &&
       cell.id === animal.children[0].getAttribute("alt")
-    ) {
+    ){
       animal.classList.add('highlight');
+      let id = animal.children[0].getAttribute("alt");
+      if(!highlightedAnimals.includes(id))
+        highlightedAnimals.push(id);
+      
     } else {
       animal.classList.remove('highlight');
     }
   });
 }
+
+
+const id = setInterval(() => {
+  if(highlightedAnimals.length === 8){
+    clearInterval(id);
+  } else {
+    console.log(highlightedAnimals.length);
+  }
+} , 1000);
+
